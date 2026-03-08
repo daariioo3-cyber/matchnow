@@ -1,52 +1,202 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MatchNow</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MatchNow</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="MatchNow">
+  <style>
+    :root{
+      --red:#ff2d2d;
+      --bg:#121212;
+      --panel:#1f1f1f;
+      --pink:#ff4fa3;
+      --blue:#3aa0ff;
+      --purple:#a855f7;
+      --text:#ffffff;
+      --muted:#cfcfcf;
+    }
 
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="MatchNow">
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:Arial, sans-serif;
+    }
 
-<style>
+    .header{
+      padding:20px 16px 10px;
+      font-size:24px;
+      font-weight:bold;
+    }
 
-body{
-margin:0;
-background:#121212;
-color:white;
-font-family:Arial;
-}
+    .sub{
+      color:var(--muted);
+      font-size:13px;
+      padding:0 16px 12px;
+    }
 
-.header{
-padding:20px;
-font-weight:bold;
-font-size:22px;
-}
+    .banner{
+      margin:0 12px 14px;
+      padding:14px;
+      border-radius:14px;
+      background:#2a1717;
+      border:1px solid #4a2323;
+    }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
-padding:12px;
-}
+    .banner-title{
+      font-weight:bold;
+      font-size:18px;
+      margin-bottom:6px;
+    }
 
-.card{
-background:#1f1f1f;
-border-radius:14px;
-padding:14px;
-text-align:center;
-font-size:14px;
-}
+    .button{
+      display:inline-block;
+      margin-top:10px;
+      background:var(--red);
+      color:white;
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:bold;
+    }
 
-.female{
-border:3px solid #ff4fa3;
-}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+      padding:12px;
+    }
 
-.male{
-border:3px solid #3aa0ff;
-}
+    .card{
+      background:var(--panel);
+      border-radius:14px;
+      overflow:hidden;
+      min-height:140px;
+      border:3px solid transparent;
+    }
 
-.bi{
-border:3px solid #a855f7;
-}
+    .female{border-color:var(--pink)}
+    .male{border-color:var(--blue)}
+    .bi{border-color:var(--purple)}
+
+    .photo{
+      height:95px;
+      background:linear-gradient(135deg,#3a3a3a,#222);
+      display:flex;
+      align-items:flex-start;
+      justify-content:flex-start;
+      padding:8px;
+      font-size:11px;
+      font-weight:bold;
+    }
+
+    .pill{
+      background:var(--red);
+      padding:4px 6px;
+      border-radius:999px;
+    }
+
+    .meta{
+      padding:10px;
+      text-align:center;
+    }
+
+    .name{
+      font-weight:bold;
+      font-size:14px;
+      margin-bottom:4px;
+    }
+
+    .dist{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .footer{
+      position:sticky;
+      bottom:0;
+      background:#181818;
+      border-top:1px solid #2a2a2a;
+      display:flex;
+      justify-content:space-around;
+      padding:12px 0;
+      margin-top:10px;
+    }
+
+    .footer div{
+      font-size:13px;
+      color:#ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">MATCHNOW</div>
+  <div class="sub">Beta · Barcelona</div>
+
+  <div class="banner">
+    <div class="banner-title">🔥 Plan ahora</div>
+    <div>30 min para quedar con alguien cerca</div>
+    <div class="button">Activar</div>
+  </div>
+
+  <div class="grid">
+    <div class="card female">
+      <div class="photo"><div class="pill">🍸 Esta noche</div></div>
+      <div class="meta">
+        <div class="name">Laura, 26</div>
+        <div class="dist">300 m</div>
+      </div>
+    </div>
+
+    <div class="card male">
+      <div class="photo"><div class="pill">🔥 Plan ahora</div></div>
+      <div class="meta">
+        <div class="name">Alex, 28</div>
+        <div class="dist">500 m</div>
+      </div>
+    </div>
+
+    <div class="card female">
+      <div class="photo"><div class="pill">💬 Hablar</div></div>
+      <div class="meta">
+        <div class="name">Clara, 27</div>
+        <div class="dist">700 m</div>
+      </div>
+    </div>
+
+    <div class="card bi">
+      <div class="photo"><div class="pill">✨ Conocer</div></div>
+      <div class="meta">
+        <div class="name">Sam, 29</div>
+        <div class="dist">1 km</div>
+      </div>
+    </div>
+
+    <div class="card male">
+      <div class="photo"><div class="pill">🎉 Fiesta</div></div>
+      <div class="meta">
+        <div class="name">Eric, 30</div>
+        <div class="dist">1.3 km</div>
+      </div>
+    </div>
+
+    <div class="card female">
+      <div class="photo"><div class="pill">👀 Interés</div></div>
+      <div class="meta">
+        <div class="name">Ana, 24</div>
+        <div class="dist">900 m</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>Inicio</div>
+    <div>Chats</div>
+    <div>Boost</div>
+    <div>Perfil</div>
+  </div>
+</body>
+</html>
