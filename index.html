@@ -1,246 +1,408 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MatchNow</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="MatchNow">
-  <style>
-    :root{
-      --red:#ff2d2d; --bg:#121212; --panel:#1b1b1b; --panel2:#242424;
-      --pink:#ff4fa3; --blue:#3aa0ff; --purple:#a855f7;
-      --text:#fff; --muted:#bdbdbd; --line:#2d2d2d;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-    .app{min-height:100vh;padding-bottom:90px}
-    .topbar{
-      padding:18px 16px 10px;border-bottom:1px solid var(--line);
-      position:sticky;top:0;background:rgba(18,18,18,.96);z-index:20;
-    }
-    .title{font-size:28px;font-weight:800;letter-spacing:.03em}
-    .sub{font-size:13px;color:var(--muted);margin-top:4px}
-    .screen{display:none}
-    .screen.active{display:block}
-    .banner{
-      margin:14px 12px;padding:14px;border-radius:14px;
-      background:linear-gradient(135deg,#2a1717,#1d1414);
-      border:1px solid #4a2323;
-    }
-    .banner-title{font-weight:800;font-size:18px;margin-bottom:6px}
-    .button{
-      display:inline-block;margin-top:10px;background:var(--red);color:white;
-      padding:10px 14px;border-radius:10px;font-weight:700;border:none;cursor:pointer;
-    }
-    .chips{display:flex;gap:8px;padding:0 12px 10px;overflow:auto}
-    .chip{
-      background:#242424;border:1px solid #333;color:#fff;border-radius:999px;
-      padding:10px 12px;font-size:13px;white-space:nowrap;cursor:pointer;
-    }
-    .chip.active{background:var(--red);border-color:var(--red)}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px}
-    .card{
-      background:var(--panel);border-radius:14px;overflow:hidden;min-height:160px;
-      border:3px solid transparent;cursor:pointer;
-    }
-    .female{border-color:var(--pink)}
-    .male{border-color:var(--blue)}
-    .bi{border-color:var(--purple)}
-    .photo{
-      height:95px;background:linear-gradient(135deg,#3a3a3a,#222);
-      display:flex;align-items:flex-start;justify-content:space-between;padding:8px;
-    }
-    .pill{background:var(--red);padding:4px 6px;border-radius:999px;font-size:10px;font-weight:700}
-    .distance{font-size:10px;background:rgba(0,0,0,.5);padding:4px 6px;border-radius:999px}
-    .meta{padding:10px;text-align:center}
-    .name{font-weight:700;font-size:14px;margin-bottom:4px}
-    .dist{color:var(--muted);font-size:12px}
-    .bio{font-size:11px;color:#ddd;margin-top:6px}
-    .panel{
-      background:var(--panel);margin:12px;border-radius:16px;border:1px solid var(--line);padding:14px
-    }
-    .list-item{background:var(--panel2);padding:14px;border-radius:12px;margin-top:10px}
-    .list-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
-    .price{color:#ff8f8f;font-weight:800}
-    .chat-msg{max-width:78%;padding:12px 14px;border-radius:16px;margin-top:10px;font-size:14px}
-    .them{background:#303030}
-    .me{background:var(--red);margin-left:auto}
-    .composer{margin-top:14px;background:var(--panel2);border-radius:12px;padding:12px;color:#999}
-    .profile-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-    .tag{background:#2c2c2c;padding:8px 10px;border-radius:999px;font-size:12px}
-    .nav{
-      position:fixed;bottom:0;left:0;right:0;background:#181818;border-top:1px solid var(--line);
-      display:grid;grid-template-columns:repeat(4,1fr);padding:10px 8px;gap:8px;
-    }
-    .nav button{
-      background:transparent;color:#bbb;border:none;border-radius:10px;padding:10px 6px;font-size:13px;cursor:pointer;
-    }
-    .nav button.active{background:#2b2b2b;color:#fff}
-    .toast{
-      position:fixed;left:50%;bottom:78px;transform:translateX(-50%);
-      background:#222;border:1px solid #444;color:#fff;padding:12px 14px;border-radius:12px;
-      display:none;z-index:50;min-width:220px;text-align:center;
-    }
-    .toast.show{display:block}
-    .modal{
-      position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:flex-end;z-index:60;
-    }
-    .modal.show{display:flex}
-    .sheet{
-      width:100%;background:#171717;border-top-left-radius:20px;border-top-right-radius:20px;
-      padding:18px;max-height:80vh;overflow:auto;border-top:1px solid #333;
-    }
-    .close{float:right;background:#2a2a2a;border:none;color:#fff;border-radius:10px;padding:8px 10px;cursor:pointer}
-    .action-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-    .secondary{
-      background:#2a2a2a;color:#fff;border:none;padding:12px;border-radius:12px;font-weight:700;cursor:pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MatchNow</title>
+
+<style>
+
+:root{
+--bg:#121212;
+--panel:#1e1e1e;
+--red:#ff2d2d;
+--pink:#ff4fa3;
+--blue:#3aa0ff;
+--purple:#a855f7;
+--text:#fff;
+--muted:#bdbdbd;
+}
+
+body{
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:Arial;
+}
+
+.header{
+padding:20px;
+font-size:26px;
+font-weight:bold;
+}
+
+.sub{
+color:var(--muted);
+font-size:13px;
+padding:0 20px 10px;
+}
+
+.chips{
+display:flex;
+gap:8px;
+padding:10px 20px;
+}
+
+.chip{
+background:#262626;
+border:none;
+color:white;
+padding:10px 14px;
+border-radius:20px;
+cursor:pointer;
+}
+
+.chip.active{
+background:var(--red);
+}
+
+.banner{
+margin:12px 20px;
+padding:14px;
+background:#2a1717;
+border-radius:12px;
+}
+
+.button{
+background:var(--red);
+padding:8px 14px;
+border-radius:10px;
+display:inline-block;
+margin-top:10px;
+cursor:pointer;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+padding:12px;
+}
+
+.card{
+background:var(--panel);
+border-radius:14px;
+overflow:hidden;
+border:3px solid transparent;
+cursor:pointer;
+}
+
+.female{border-color:var(--pink)}
+.male{border-color:var(--blue)}
+.bi{border-color:var(--purple)}
+
+.photo{
+height:90px;
+background:linear-gradient(135deg,#3a3a3a,#222);
+display:flex;
+justify-content:space-between;
+padding:6px;
+font-size:11px;
+}
+
+.pill{
+background:var(--red);
+padding:3px 6px;
+border-radius:999px;
+}
+
+.distance{
+background:#0008;
+padding:3px 6px;
+border-radius:999px;
+}
+
+.meta{
+padding:10px;
+text-align:center;
+}
+
+.name{
+font-weight:bold;
+}
+
+.bio{
+font-size:11px;
+color:#ccc;
+}
+
+.nav{
+position:fixed;
+bottom:0;
+width:100%;
+background:#1a1a1a;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:10px;
+}
+
+.nav button{
+background:none;
+border:none;
+color:white;
+font-size:14px;
+}
+
+.modal{
+position:fixed;
+inset:0;
+background:#0009;
+display:none;
+align-items:flex-end;
+}
+
+.modal.show{
+display:flex;
+}
+
+.sheet{
+background:#181818;
+width:100%;
+padding:20px;
+border-radius:20px 20px 0 0;
+}
+
+</style>
 </head>
+
 <body>
-<div class="app">
-  <div class="topbar">
-    <div class="title">MATCHNOW</div>
-    <div class="sub">Beta · Barcelona</div>
-  </div>
 
-  <div id="home" class="screen active">
-    <div class="chips">
-      <button class="chip active">Ahora</button>
-      <button class="chip">Esta noche</button>
-      <button class="chip">Explorar</button>
-    </div>
+<div class="header">MATCHNOW</div>
+<div class="sub">Beta · Barcelona</div>
 
-    <div class="banner">
-      <div class="banner-title">🔥 Plan ahora</div>
-      <div>30 min para quedar con alguien cerca</div>
-      <button class="button" onclick="toast('Boost activado de prueba')">Activar</button>
-    </div>
-
-    <div class="grid">
-      <div class="card female" onclick="openProfile('Laura, 26','300 m','🍸 Esta noche','Busco alguien divertido para salir por el Born.','♀ Mujer')">
-        <div class="photo"><div class="pill">🍸 Esta noche</div><div class="distance">300 m</div></div>
-        <div class="meta"><div class="name">Laura, 26</div><div class="dist">300 m</div><div class="bio">Salir por el Born</div></div>
-      </div>
-
-      <div class="card male" onclick="openProfile('Alex, 28','500 m','🔥 Plan ahora','Me apunto a algo espontáneo sin muchas vueltas.','♂ Hombre')">
-        <div class="photo"><div class="pill">🔥 Plan ahora</div><div class="distance">500 m</div></div>
-        <div class="meta"><div class="name">Alex, 28</div><div class="dist">500 m</div><div class="bio">Plan improvisado</div></div>
-      </div>
-
-      <div class="card female" onclick="openProfile('Clara, 27','700 m','💬 Hablar','Prefiero una charla con chispa y luego ya veremos.','♀ Mujer')">
-        <div class="photo"><div class="pill">💬 Hablar</div><div class="distance">700 m</div></div>
-        <div class="meta"><div class="name">Clara, 27</div><div class="dist">700 m</div><div class="bio">Conocer gente</div></div>
-      </div>
-
-      <div class="card bi" onclick="openProfile('Sam, 29','1 km','✨ Conocer','Abierto a planes y a ver qué pasa.','⚥ Ambos')">
-        <div class="photo"><div class="pill">✨ Conocer</div><div class="distance">1 km</div></div>
-        <div class="meta"><div class="name">Sam, 29</div><div class="dist">1 km</div><div class="bio">Abierto a planes</div></div>
-      </div>
-
-      <div class="card male" onclick="openProfile('Eric, 30','1.3 km','🎉 Fiesta','Busco algo con energía y cero drama.','♂ Hombre')">
-        <div class="photo"><div class="pill">🎉 Fiesta</div><div class="distance">1.3 km</div></div>
-        <div class="meta"><div class="name">Eric, 30</div><div class="dist">1.3 km</div><div class="bio">Salir esta noche</div></div>
-      </div>
-
-      <div class="card female" onclick="openProfile('Ana, 24','900 m','👀 Interés','Me gustan planes ligeros y gente directa.','♀ Mujer')">
-        <div class="photo"><div class="pill">👀 Interés</div><div class="distance">900 m</div></div>
-        <div class="meta"><div class="name">Ana, 24</div><div class="dist">900 m</div><div class="bio">Centro BCN</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="chats" class="screen">
-    <div class="panel">
-      <div style="font-size:20px;font-weight:800">Chats</div>
-      <div class="sub">Demo navegable</div>
-      <div class="chat-msg them">Hola 🙂</div>
-      <div class="chat-msg me">Hey, vi que quieres salir esta noche.</div>
-      <div class="chat-msg them">Sí. ¿Te apetece tomar algo?</div>
-      <div class="chat-msg me">Claro, por el Born me va bien.</div>
-      <div class="composer" onclick="toast('Campo de mensaje demo')">Escribe un mensaje…</div>
-    </div>
-  </div>
-
-  <div id="boost" class="screen">
-    <div class="panel">
-      <div style="font-size:22px;font-weight:800">🔥 Boost Ahora</div>
-      <div class="sub">Impulsa tu perfil 30 minutos y aparece arriba del grid.</div>
-      <div class="list-item"><div class="list-head"><span>Boost individual</span><span class="price">2,99€</span></div></div>
-      <div class="list-item"><div class="list-head"><span>Pack 5 boosts</span><span class="price">9,99€</span></div></div>
-      <div class="list-item"><div class="list-head"><span>Premium mensual</span><span class="price">12,99€/mes</span></div></div>
-      <button class="button" onclick="toast('Compra demo: todavía no activa pagos reales')">Activar boost</button>
-    </div>
-  </div>
-
-  <div id="profile" class="screen">
-    <div class="panel">
-      <div style="font-size:22px;font-weight:800">Tu perfil</div>
-      <div class="sub">Vista demo</div>
-      <div class="profile-tags">
-        <span class="tag">♂ Hombre</span>
-        <span class="tag">Busca mujeres</span>
-        <span class="tag">Barcelona</span>
-      </div>
-      <div class="list-item">Aquí irá tu bio, fotos, edad e intereses.</div>
-      <button class="button" onclick="toast('Editar perfil próximamente')">Editar perfil</button>
-    </div>
-  </div>
+<div class="chips">
+<button class="chip active" onclick="setTabFilter(this,'ahora')">Ahora</button>
+<button class="chip" onclick="setTabFilter(this,'esta_noche')">Esta noche</button>
+<button class="chip" onclick="setTabFilter(this,'explorar')">Explorar</button>
 </div>
 
-<div id="toast" class="toast"></div>
-
-<div id="modal" class="modal" onclick="closeModal(event)">
-  <div class="sheet">
-    <button class="close" onclick="hideModal()">Cerrar</button>
-    <div id="mName" style="font-size:24px;font-weight:800;margin-top:6px"></div>
-    <div id="mSub" class="sub" style="margin-top:6px"></div>
-    <div id="mIntent" class="tag" style="display:inline-block;margin-top:10px"></div>
-    <div id="mBio" style="margin-top:14px;line-height:1.45"></div>
-    <div class="action-row">
-      <button class="button" onclick="toast('Chat de prueba abierto')">Mensaje</button>
-      <button class="secondary" onclick="toast('Perfil guardado')">Guardar</button>
-    </div>
-    <div class="action-row">
-      <button class="secondary" onclick="toast('Usuario reportado de prueba')">Reportar</button>
-      <button class="secondary" onclick="toast('Usuario bloqueado de prueba')">Bloquear</button>
-    </div>
-  </div>
+<div class="banner">
+🔥 Plan ahora<br>
+<div class="button">Activar</div>
 </div>
+
+<div class="grid"></div>
 
 <div class="nav">
-  <button class="active" onclick="showScreen('home', this)">Inicio</button>
-  <button onclick="showScreen('chats', this)">Chats</button>
-  <button onclick="showScreen('boost', this)">Boost</button>
-  <button onclick="showScreen('profile', this)">Perfil</button>
+<button onclick="showScreen('home')">Inicio</button>
+<button onclick="showScreen('chats')">Chats</button>
+<button onclick="showScreen('boost')">Boost</button>
+<button onclick="showScreen('profile')">Perfil</button>
+</div>
+
+<div class="modal" id="modal" onclick="closeModal(event)">
+<div class="sheet">
+<h2 id="mName"></h2>
+<p id="mBio"></p>
+<button onclick="hideModal()">Cerrar</button>
+</div>
 </div>
 
 <script>
-function showScreen(id, btn){
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  window.scrollTo({top:0, behavior:'smooth'});
+
+const currentUser={
+gender:"male",
+interestedIn:["female"],
+availableNow:true
 }
-function toast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(window.__toastTimer);
-  window.__toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+
+const profiles=[
+{
+id:"p1",
+name:"Laura, 26",
+gender:"female",
+interestedIn:["male"],
+distanceKm:0.3,
+lastActiveMinutes:3,
+availableNow:true,
+intent:"esta_noche",
+bio:"Salir por el Born",
+label:"🍸 Esta noche",
+cardClass:"female"
+},
+{
+id:"p2",
+name:"Alex, 28",
+gender:"male",
+interestedIn:["female"],
+distanceKm:0.5,
+lastActiveMinutes:12,
+availableNow:true,
+intent:"plan_ahora",
+bio:"Plan improvisado",
+label:"🔥 Plan ahora",
+cardClass:"male"
+},
+{
+id:"p3",
+name:"Clara, 27",
+gender:"female",
+interestedIn:["male"],
+distanceKm:0.7,
+lastActiveMinutes:20,
+availableNow:false,
+intent:"hablar",
+bio:"Conocer gente",
+label:"💬 Hablar",
+cardClass:"female"
+},
+{
+id:"p4",
+name:"Sam, 29",
+gender:"female",
+interestedIn:["male","female"],
+distanceKm:1,
+lastActiveMinutes:8,
+availableNow:false,
+intent:"conocer",
+bio:"Abierto a planes",
+label:"✨ Conocer",
+cardClass:"bi"
+},
+{
+id:"p5",
+name:"Eric, 30",
+gender:"male",
+interestedIn:["female"],
+distanceKm:1.3,
+lastActiveMinutes:4,
+availableNow:false,
+intent:"fiesta",
+bio:"Salir esta noche",
+label:"🎉 Fiesta",
+cardClass:"male"
+},
+{
+id:"p6",
+name:"Ana, 24",
+gender:"female",
+interestedIn:["male"],
+distanceKm:0.9,
+lastActiveMinutes:6,
+availableNow:false,
+intent:"hablar",
+bio:"Centro BCN",
+label:"👀 Interés",
+cardClass:"female"
 }
-function openProfile(name, distance, intent, bio, gender){
-  document.getElementById('mName').textContent = name;
-  document.getElementById('mSub').textContent = distance + ' · ' + gender;
-  document.getElementById('mIntent').textContent = intent;
-  document.getElementById('mBio').textContent = bio;
-  document.getElementById('modal').classList.add('show');
+]
+
+function compatibilityScore(profile){
+if(!currentUser.interestedIn.includes(profile.gender))return-1
+if(!profile.interestedIn.includes(currentUser.gender))return-1
+return 40
 }
-function hideModal(){ document.getElementById('modal').classList.remove('show'); }
-function closeModal(e){ if(e.target.id === 'modal') hideModal(); }
+
+function distanceScore(d){
+if(d<=0.3)return 25
+if(d<=1)return 20
+if(d<=3)return 15
+if(d<=5)return 10
+return 5
+}
+
+function activityScore(m){
+if(m<=5)return 20
+if(m<=10)return 15
+if(m<=60)return 10
+return 5
+}
+
+function availableNowScore(profile){
+if(profile.availableNow&&currentUser.availableNow)return 40
+if(profile.availableNow)return 30
+return 0
+}
+
+function intentScore(intent,tab){
+
+const table={
+ahora:{plan_ahora:20,esta_noche:12,fiesta:10,hablar:6,conocer:4},
+esta_noche:{esta_noche:20,fiesta:16,plan_ahora:14,hablar:5,conocer:6},
+explorar:{plan_ahora:10,esta_noche:10,fiesta:9,hablar:8,conocer:8}
+}
+
+return table[tab][intent]||0
+}
+
+function calculateScore(profile,tab){
+
+let compat=compatibilityScore(profile)
+if(compat<0)return-1
+
+let score=0
+
+score+=compat
+score+=distanceScore(profile.distanceKm)
+score+=activityScore(profile.lastActiveMinutes)
+score+=availableNowScore(profile)
+score+=intentScore(profile.intent,tab)
+
+return score
+}
+
+function rankProfiles(tab){
+
+return profiles
+.map(p=>({...p,score:calculateScore(p,tab)}))
+.filter(p=>p.score>=0)
+.sort((a,b)=>b.score-a.score)
+
+}
+
+function renderGrid(tab){
+
+const grid=document.querySelector(".grid")
+
+const ranked=rankProfiles(tab)
+
+grid.innerHTML=ranked.map(p=>`
+<div class="card ${p.cardClass}" onclick="openProfile('${p.name}','${p.bio}')">
+
+<div class="photo">
+<div class="pill">${p.label}</div>
+<div class="distance">${p.distanceKm} km</div>
+</div>
+
+<div class="meta">
+<div class="name">${p.name}</div>
+<div class="bio">${p.bio}</div>
+</div>
+
+</div>
+`).join("")
+
+}
+
+function setTabFilter(button,tab){
+
+document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"))
+button.classList.add("active")
+
+renderGrid(tab)
+
+}
+
+function openProfile(name,bio){
+
+document.getElementById("mName").innerText=name
+document.getElementById("mBio").innerText=bio
+
+document.getElementById("modal").classList.add("show")
+
+}
+
+function hideModal(){
+document.getElementById("modal").classList.remove("show")
+}
+
+function closeModal(e){
+if(e.target.id==="modal")hideModal()
+}
+
+renderGrid("ahora")
+
 </script>
+
 </body>
 </html>
